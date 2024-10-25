@@ -22,6 +22,10 @@ while i < scores.count {
     i += 1
 }
 
+repeat{
+    print("Last score in the array: \(scores[i-1])")
+} while i < 0
+
 var mixArray: [Any] = [1, "Hello", true, 4.5]
 mixArray.append("Assignment 2")
 print(mixArray)
