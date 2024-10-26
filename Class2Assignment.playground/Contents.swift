@@ -73,7 +73,7 @@ newDict["Shaun"] = nil
 print(newDict)
 print(newDict["Shaun"] ?? "The value is nil for this key")
 
-var name = "James"
+var name = "Jame"
 @MainActor func useGuard() {
     guard let value = newDict[name] else {
         print("\(name) is not in the dictionary")
@@ -91,6 +91,8 @@ for (key, val) in newDict {
     
 
 print(newDict.keys)
+print(newDict.values)
+
 
 
 
