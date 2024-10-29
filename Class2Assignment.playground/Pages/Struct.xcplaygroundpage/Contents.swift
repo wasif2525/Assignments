@@ -84,7 +84,7 @@ struct PublisherDetails {
     }
 }
 
-let publisherInfo = PublisherDetails(name: "The Cranberry", address: "Atlanta, GA")
+let publisherInfo: PublisherDetails? = PublisherDetails(name: "The Cranberry", address: "Atlanta, GA")
 var b5 = Book(title: "The Swift Programming Language", author: "Khalid Al-Balkhi", pageCount: 500, publisherDetails: publisherInfo)
 
 if let publisherName = b1.publisherDetails?.name{
