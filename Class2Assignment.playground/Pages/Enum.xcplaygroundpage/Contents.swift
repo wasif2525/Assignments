@@ -80,10 +80,6 @@ for condition in WeatherCondition.allCases {
     print("\(condition): \(condition.advice)")
 }
 
-
-
-
-
 enum FlightStatus {
     case onTime(departureTime: String)
     case delayed(delayReason: String, delayDuration: Int)
