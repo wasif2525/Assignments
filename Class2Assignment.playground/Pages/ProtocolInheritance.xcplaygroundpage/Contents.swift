@@ -1,25 +1,24 @@
-// Base protocol for an electronic device
+// protocol for an electronic device
 protocol Device {
     var brand: String { get }
     func powerOn()
 }
 
-// Protocol for devices that can make calls
+// Protocol Inheritance
 protocol Callable: Device {
     func makeCall(to number: String)
 }
 
-// Protocol for devices that can play music
 protocol MusicPlayable: Device {
     func playMusic(track: String)
 }
 
-// Protocol inheriting from both `Callable` and `MusicPlayable`
-protocol SmartDevice: Callable, MusicPlayable {
+typealias SmartDeviceTask = Callable & MusicPlayable
+
+protocol SmartDevice: SmartDeviceTask {
     func browseInternet(url: String)
 }
 
-// Implementing `SmartDevice` for a Smartphone struct
 struct Smartphone: SmartDevice {
     let brand: String
 
