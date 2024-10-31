@@ -21,7 +21,7 @@ logProcessing(data: items){
 }
 
 print("---Escaping Closure---")
-func downLoadData(onCompletion: @escaping () -> Void) {
+@MainActor func downLoadData(onCompletion: @escaping () -> Void) {
     print("Start downloading")
     DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
         print("Download completed")

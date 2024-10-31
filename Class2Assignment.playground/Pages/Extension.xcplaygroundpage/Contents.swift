@@ -42,7 +42,7 @@ extension String{
 }
 
 print("---Phone Number validation---")
-let phoneNumber = "4042378290"
+let phoneNumber = "404237829"
 switch phoneNumber.validatePhoneNumber(){
 case .valid:
     print("\(phoneNumber) is a valid phone number")
