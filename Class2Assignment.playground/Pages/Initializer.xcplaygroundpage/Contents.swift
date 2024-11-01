@@ -84,37 +84,48 @@ print(invalidPhone?.brand) // Output: nil
 // Required Init
 print("---Required Initializer")
 
-class Teacher {
-    var dept: String
-    var noOfSubs: Int
+class Vehicle {
+    var type: String
+    var numOfWheels: Int
     
-    init(dept: String, noOfSubs: Int) {
-        self.dept = dept
-        self.noOfSubs = noOfSubs
+    // Required initializer in the superclass
+    required init(type: String, numOfWheels: Int) {
+        self.type = type
+        self.numOfWheels = numOfWheels
     }
 }
 
-class SportsTeacher: Teacher {
-    var favSport: String
+class Bike: Vehicle {
+    var hasGear: Bool
 
     // Primary initializer in subclass
-    init(dept: String, noOfSubs: Int, favSport: String) {
-        self.favSport = favSport
-        super.init(dept: dept, noOfSubs: noOfSubs)
+    init(type: String, numOfWheels: Int, hasGear: Bool) {
+        self.hasGear = hasGear
+        super.init(type: type, numOfWheels: numOfWheels)
     }
     
-    // Required initializer 
-    required override init(dept: String, noOfSubs: Int) {
-        self.favSport = "Unknown Sport"
-        super.init(dept: dept, noOfSubs: noOfSubs)
+    // Required initializer that meets superclass requirements
+    required init(type: String, numOfWheels: Int) {
+        self.hasGear = false
+        super.init(type: type, numOfWheels: numOfWheels)
+    }
+    
+    // Another required initializer with only `type` parameter
+    required init(type: String) {
+        fatalError("Number of Wheels and Gear Info not provided")
     }
 }
 
-let sportsTeacher = SportsTeacher(dept: "Physical Education", noOfSubs: 3, favSport: "Basketball")
-print(sportsTeacher.favSport) // Output: Basketball
+// Testing the initializers
+let mountainBike = Bike(type: "Mountain Bike", numOfWheels: 2, hasGear: true)
+print(mountainBike.type)  // Output: true
 
-let generalTeacher = SportsTeacher(dept: "Science", noOfSubs: 4)
-print(generalTeacher.favSport) // Output: Unknown Sport
+let regularBike = Bike(type: "Road Bike", numOfWheels: 2)
+print(regularBike.hasGear)  // Output: false
+
+// The following line would cause a runtime error due to the fatalError in the initializer
+// let incompleteBike = Bike(type: "Unicycle")
+
 
 
 
