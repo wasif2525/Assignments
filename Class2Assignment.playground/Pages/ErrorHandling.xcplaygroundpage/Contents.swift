@@ -18,7 +18,7 @@ func withdraw(amount: Double, balance: Double) throws -> Double {
 
 // Try-Catch Block
 do {
-    let remainingBalance = try withdraw(amount: 200, balance: 150)
+    let remainingBalance = try withdraw(amount: 200, balance: 50)
     print("Transaction successful! Remaining balance: \(remainingBalance)")
 } catch {
     print("Transaction failed:", error.localizedDescription)
@@ -41,50 +41,52 @@ enum UserAPIError: Error {
     case unknownError
 }
 
-func fetchUserData(userId: Int, completion: @escaping (Data?, UserAPIError?) -> Void) {
-    let urlString = "https://dummyjson.com/users/\(userId)"
+func fetchUserData(productId: Double, completion: @Sendable @escaping (Data?, Error?) -> Void) {
+    let urlString = "https://dummyjson.com/products/\(productId)"
     guard let url = URL(string: urlString) else {
-        completion(nil, .invalidURL)
+        completion(nil, UserAPIError.invalidURL)
         return
     }
     
     let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
         if error != nil {
-            completion(nil, .requestFailed)
+            completion(nil, error)
             return
         }
         
         if let httpResponse = response as? HTTPURLResponse {
             switch httpResponse.statusCode {
             case 404:
-                completion(nil, .userNotFound)
+                completion(nil, UserAPIError.userNotFound)
                 return
             case 200..<300:
                 break // continue with successful response
             default:
-                completion(nil, .unknownError)
+                completion(nil, UserAPIError.unknownError)
                 return
             }
         }
         
         guard let data = data else {
-            completion(nil, .unknownError)
+            completion(nil, UserAPIError.unknownError)
             return
         }
         
         completion(data, nil)
     }
     dataTask.resume()
+    
 }
 
-let userId = 5
-fetchUserData(userId: userId) { data, error in
+let productId2 = 5.5
+fetchUserData(productId: productId2) { data, error in
     if let data = data {
-        print("User Data received: \(data)")
+        print("Data received: \(data)")
     } else {
         print(error?.localizedDescription ?? "An unknown error occurred while fetching user data.")
     }
 }
+
 
 
 
@@ -112,7 +114,7 @@ struct Product: Codable {
 }
 
 // Modify function to decode data
-func fetchProductData2(productId: Int, completion: @escaping (Product?, UserAPIError2?) -> Void) {
+func fetchProductData2(productId: Int, completion: @Sendable @escaping (Product?, UserAPIError2?) -> Void) {
     let urlString = "https://dummyjson.com/products/\(productId)"
     guard let url = URL(string: urlString) else {
         completion(nil, .invalidURL)
@@ -161,8 +163,11 @@ func fetchProductData2(productId: Int, completion: @escaping (Product?, UserAPIE
 
 // Usage
 let productId = 5
+
 fetchProductData2(productId: productId) { product, error in
     if let product = product {
+        print()
+        print("---Prod details")
         print("Product Data received for ID \(productId):")
         print("Title: \(product.title)")
         print("Description: \(product.description)")
